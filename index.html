@@ -110,26 +110,22 @@ async function loadEvents() {
     renderEvents(events);
 }
 
-{
-    date:"2026-06-25",
-    group:"myojou",
-    title:"対バンライブ",
-    place:"新宿",
-    class:"myojou"
-}
-
-];
-
 function renderEvents(events){
 
     const list=document.getElementById("eventList");
+    list.innerHTML="";
 
     events
     .sort((a,b)=>a.date.localeCompare(b.date))
     .forEach(event=>{
 
+        const colorClass =
+            event.group === "myojou"
+            ? "myojou"
+            : "panimon";
+
         list.innerHTML += `
-        <div class="event ${event.class}">
+        <div class="event ${colorClass}">
             <div class="date">${event.date}</div>
             <div class="title">${event.title}</div>
             <div class="group">${event.group}</div>
