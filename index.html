@@ -4,9 +4,164 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>地下アイドルスケジュール</title>
+
+<style>
+body{
+    font-family:sans-serif;
+    margin:0;
+    background:#f5f5f5;
+}
+
+header{
+    background:#222;
+    color:white;
+    padding:15px;
+    text-align:center;
+}
+
+.container{
+    padding:15px;
+}
+
+.event{
+    background:white;
+    border-radius:10px;
+    padding:12px;
+    margin-bottom:10px;
+    box-shadow:0 2px 5px rgba(0,0,0,.1);
+}
+
+.panimon{
+    border-left:8px solid #ff4da6;
+}
+
+.myojou{
+    border-left:8px solid #4d8cff;
+}
+
+.date{
+    font-size:14px;
+    color:#666;
+}
+
+.title{
+    font-weight:bold;
+    margin:5px 0;
+}
+
+.group{
+    font-size:13px;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    background:#333;
+    color:white;
+    margin-top:8px;
+}
+
+#modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+}
+
+.modal-content{
+    background:white;
+    margin:20% auto;
+    width:90%;
+    max-width:400px;
+    padding:20px;
+    border-radius:10px;
+}
+</style>
 </head>
+
 <body>
+
+<header>
 <h1>地下アイドルスケジュール</h1>
-<p>サイト作成中...</p>
+</header>
+
+<div class="container" id="eventList"></div>
+
+<div id="modal">
+    <div class="modal-content">
+        <h2 id="detailTitle"></h2>
+        <p id="detailDate"></p>
+        <p id="detailGroup"></p>
+        <p id="detailPlace"></p>
+
+        <button onclick="closeModal()">閉じる</button>
+    </div>
+</div>
+
+<script>
+
+const events = [
+
+{
+    date:"2026-06-20",
+    group:"Panic Monster !n Wonderland",
+    title:"ワンマンライブ",
+    place:"渋谷",
+    class:"panimon"
+},
+
+{
+    date:"2026-06-25",
+    group:"myojou",
+    title:"対バンライブ",
+    place:"新宿",
+    class:"myojou"
+}
+
+];
+
+function renderEvents(){
+
+    const list=document.getElementById("eventList");
+
+    events
+    .sort((a,b)=>a.date.localeCompare(b.date))
+    .forEach(event=>{
+
+        list.innerHTML += `
+        <div class="event ${event.class}">
+            <div class="date">${event.date}</div>
+            <div class="title">${event.title}</div>
+            <div class="group">${event.group}</div>
+
+            <button onclick='showDetail(${JSON.stringify(event)})'>
+                詳細
+            </button>
+        </div>
+        `;
+    });
+
+}
+
+function showDetail(event){
+
+    document.getElementById("detailTitle").textContent=event.title;
+    document.getElementById("detailDate").textContent="日付: "+event.date;
+    document.getElementById("detailGroup").textContent="グループ: "+event.group;
+    document.getElementById("detailPlace").textContent="会場: "+event.place;
+
+    document.getElementById("modal").style.display="block";
+}
+
+function closeModal(){
+    document.getElementById("modal").style.display="none";
+}
+
+renderEvents();
+
+</script>
+
 </body>
 </html>
