@@ -102,15 +102,13 @@ button{
 
 <script>
 
-const events = [
+async function loadEvents() {
 
-{
-    date:"2026-06-20",
-    group:"Panic Monster !n Wonderland",
-    title:"ワンマンライブ",
-    place:"渋谷",
-    class:"panimon"
-},
+    const response = await fetch("events.json");
+    const events = await response.json();
+
+    renderEvents(events);
+}
 
 {
     date:"2026-06-25",
@@ -122,7 +120,7 @@ const events = [
 
 ];
 
-function renderEvents(){
+function renderEvents(events){
 
     const list=document.getElementById("eventList");
 
